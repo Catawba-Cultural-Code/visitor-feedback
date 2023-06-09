@@ -1,20 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from 'expo-status-bar'
+import { Button, StyleSheet, Text, View } from 'react-native'
+import FormView from './FormView'
+import { useState } from 'react'
+import WelcomeView from './WelcomeView'
+import { useFonts } from 'expo-font'
 
+const Views = [WelcomeView, FormView]
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const [view, setView] = useState(0)
+  const CurrentView = Views[view]
+  const [fontsLoaded] = useFonts({
+    Cabin: require('./assets/Cabin-italic.ttf'),
+  })
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  if (!fontsLoaded) {
+    return null
+  }
+  return (
+    <>
+      <CurrentView
+        onPress={() => {
+          console.log('press')
+          setView(1)
+        }}
+        onTimeout={() => {
+          console.log('timeout')
+          setView(0)
+        }}
+        delay={5 * 1000}
+      />
+      <StatusBar style='light' hidden={true} />
+    </>
+  )
+}
