@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar'
 import { Button, StyleSheet, Text, View } from 'react-native'
-import FormView from './FormView'
+import FormView from './Views/FormView'
 import { useState } from 'react'
-import WelcomeView from './WelcomeView'
+import WelcomeView from './Views/WelcomeView'
 import { useFonts } from 'expo-font'
 
 const Views = [WelcomeView, FormView]

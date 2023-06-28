@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { Animated, Image } from 'react-native'
-
+const BUNNY_RUN = require('../../assets/bunnypack_gifs/bunny_run_16fps.gif')
 const Rabbit = () => {
   const position = useRef(new Animated.Value(-50)).current
   useEffect(() => {
@@ -20,10 +20,7 @@ const Rabbit = () => {
   }, [position])
   return (
     <Animated.View style={{ posiiton: 'absolute', bottom: 10, left: position }}>
-      <Image
-        source={require('./assets/bunnypack_gifs/bunny_run_16fps.gif')}
-        style={{ width: 75, height: 75 }}
-      />
+      <Image source={BUNNY_RUN} style={{ width: 75, height: 75 }} />
     </Animated.View>
   )
 }

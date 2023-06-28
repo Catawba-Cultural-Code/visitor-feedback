@@ -10,8 +10,8 @@ import {
 import Svg, { Path } from 'react-native-svg'
 import Rabbit from './Rabbit'
 import { useRef, useEffect } from 'react'
-const LOGO = require('./assets/logo.png')
-const FEEDBACK_QR = require('./assets/feedback-qr.png')
+const LOGO = require('../../assets/logo.png')
+const FEEDBACK_QR = require('../../assets/feedback-qr.png')
 
 const WelcomeView = ({ onPress }) => {
   const button_spring = useRef(new Animated.Value(1)).current
