@@ -13,7 +13,7 @@ const FEEDBACK_URL = 'http://visitor-feedback.catawbaculture.org'
 
 export default function FormView({ onTimeout, delay }) {
   const fade_view = useRef(new Animated.Value(1)).current
-
+  const fadeIn = useRef(new Animated.Value(0)).current
   const fade_out = () => {
     Animated.timing(fade_view, {
       useNativeDriver: false,
@@ -24,13 +24,19 @@ export default function FormView({ onTimeout, delay }) {
   }
 
   useEffect(() => {
-    fade_view.addListener(({ value }) => {
-      console.log(value)
-      if (value === 0) {
-        onTimeout()
-      }
+    Animated.timing(fadeIn, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: false,
+    }).start(() => {
+      fade_view.addListener(({ value }) => {
+        console.log(value)
+        if (value === 0) {
+          onTimeout()
+        }
+      })
+      fade_out()
     })
-    fade_out()
   }, [])
   const handleStop = () => {
     fade_view.stopAnimation()
@@ -41,11 +47,13 @@ export default function FormView({ onTimeout, delay }) {
   return (
     <TouchableOpacity
       activeOpacity={1}
-      style={{ flex: 1, backgroundColor: THEME.navy }}
+      style={{ flex: 1, backgroundColor: THEME.blue }}
       onPress={() => handleStop()}
     >
-      <Animated.View style={{ flex: 1, opacity: fade_view }}>
-        <WebView source={{ uri: FEEDBACK_URL }} style={{ flex: 1 }}></WebView>
+      <Animated.View style={{ flex: 1, opacity: fadeIn }}>
+        <Animated.View style={{ flex: 1, opacity: fade_view }}>
+          <WebView source={{ uri: FEEDBACK_URL }} style={{ flex: 1 }}></WebView>
+        </Animated.View>
       </Animated.View>
     </TouchableOpacity>
   )

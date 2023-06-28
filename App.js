@@ -28,7 +28,7 @@ export default function App() {
           console.log('timeout')
           setView(0)
         }}
-        delay={5 * 1000}
+        delay={15 * 1000}
       />
       <StatusBar style='light' hidden={true} />
     </>
