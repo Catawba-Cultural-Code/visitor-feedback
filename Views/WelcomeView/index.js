@@ -7,6 +7,7 @@ import {
   View,
   Animated,
 } from 'react-native'
+import THEME from '../../THEME'
 import Svg, { Path } from 'react-native-svg'
 import Rabbit from './Rabbit'
 import { useRef, useEffect } from 'react'
@@ -58,7 +59,7 @@ const WelcomeView = ({ onPress }) => {
     outputRange: ['0deg', '360deg'],
   })
   return (
-    <View style={{ flex: 1, backgroundColor: '#051940' }}>
+    <View style={{ flex: 1, backgroundColor: THEME.navy }}>
       <View style={{ marginTop: 100 }}>
         <Text
           style={{
