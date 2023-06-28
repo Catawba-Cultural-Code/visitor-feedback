@@ -10,8 +10,53 @@ import {
 import Svg, { Path } from 'react-native-svg'
 import Rabbit from './Rabbit'
 import { useRef, useEffect } from 'react'
+const LOGO = require('./assets/logo.png')
+const FEEDBACK_QR = require('./assets/feedback-qr.png')
 
 const WelcomeView = ({ onPress }) => {
+  const button_spring = useRef(new Animated.Value(1)).current
+  const rotate_or = useRef(new Animated.Value(0)).current
+  const qr_spring = useRef(new Animated.Value(1)).current
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(button_spring, {
+          toValue: 1.25,
+          duration: 500,
+          useNativeDriver: false,
+          delay: 1000,
+        }),
+        Animated.spring(button_spring, {
+          toValue: 1,
+          tension: 20,
+          friction: 1,
+          useNativeDriver: false,
+        }),
+        Animated.timing(rotate_or, {
+          delay: 500,
+          useNativeDriver: false,
+          duration: 1000,
+          toValue: 1,
+        }),
+        Animated.timing(qr_spring, {
+          toValue: 1.25,
+          duration: 500,
+          useNativeDriver: false,
+          delay: 1000,
+        }),
+        Animated.spring(qr_spring, {
+          toValue: 1,
+          tension: 20,
+          friction: 1,
+          useNativeDriver: false,
+        }),
+      ])
+    ).start()
+  }, [])
+  const spin = rotate_or.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'],
+  })
   return (
     <View style={{ flex: 1, backgroundColor: '#051940' }}>
       <View style={{ marginTop: 100 }}>
@@ -21,7 +66,7 @@ const WelcomeView = ({ onPress }) => {
             fontSize: 50,
             textAlign: 'center',
             marginBottom: 50,
-            fontFamily: 'Cabin',
+            fontFamily: 'Anton',
           }}
         >
           Let us know how you enjoyed your visit
@@ -37,11 +82,11 @@ const WelcomeView = ({ onPress }) => {
           height: '100%',
         }}
       >
-        <View
+        <Animated.View
           style={{
             flex: 1,
             alignItems: 'center',
-            // transform: [{ scale: bttnFloat }],
+            transform: [{ scale: button_spring }],
           }}
         >
           <TouchableOpacity
@@ -66,47 +111,65 @@ const WelcomeView = ({ onPress }) => {
               Sign Guest Book
             </Text>
           </TouchableOpacity>
-        </View>
-        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <View
+        </Animated.View>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Animated.View
             style={{
-              height: 30,
-              width: 2,
-              backgroundColor: '#fbc10b',
-              marginBottom: 5,
-            }}
-          ></View>
-          <View
-            style={{
-              height: 60,
-              width: 60,
-              borderRadius: 60,
               justifyContent: 'center',
               alignItems: 'center',
-              borderWidth: 3,
-              borderColor: '#fbc10b',
+              transform: [{ rotate: spin }],
             }}
           >
-            <Text
-              style={{ fontWeight: 'bold', color: '#fbc10b', fontSize: 20 }}
-            >
-              OR
-            </Text>
-          </View>
-          <View
+            <View
+              style={{
+                height: 30,
+                width: 2,
+                backgroundColor: '#fbc10b',
+                marginBottom: 5,
+              }}
+            ></View>
+            <View
+              style={{
+                height: 60,
+                width: 60,
+                borderRadius: 60,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderWidth: 3,
+                borderColor: '#fbc10b',
+              }}
+            ></View>
+            <View
+              style={{
+                height: 30,
+                width: 2,
+                backgroundColor: '#fbc10b',
+                marginTop: 5,
+              }}
+            ></View>
+          </Animated.View>
+          <Text
             style={{
-              height: 30,
-              width: 2,
-              backgroundColor: '#fbc10b',
-              marginTop: 5,
+              fontWeight: 'bold',
+              color: '#fbc10b',
+              fontSize: 20,
+              position: 'absolute',
             }}
-          ></View>
+          >
+            OR
+          </Text>
         </View>
-        <View
+        <Animated.View
           style={{
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
+            transform: [{ scale: qr_spring }],
           }}
         >
           {/* <Blob /> */}
@@ -120,16 +183,13 @@ const WelcomeView = ({ onPress }) => {
             </Svg>
           </View>
           <Image
-            source={require('./feedback-qr.png')}
+            source={FEEDBACK_QR}
             style={{ width: 150, height: 150, position: 'absolute' }}
           />
-        </View>
+        </Animated.View>
       </View>
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-        <Image
-          source={require('./logo.png')}
-          style={{ width: 150, height: 150 }}
-        />
+        <Image source={LOGO} style={{ width: 150, height: 150 }} />
       </View>
       {/* <Rabbit /> */}
     </View>

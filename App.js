@@ -11,6 +11,7 @@ export default function App() {
   const CurrentView = Views[view]
   const [fontsLoaded] = useFonts({
     Cabin: require('./assets/Cabin-italic.ttf'),
+    Anton: require('./assets/Anton-Regular.ttf'),
   })
 
   if (!fontsLoaded) {
