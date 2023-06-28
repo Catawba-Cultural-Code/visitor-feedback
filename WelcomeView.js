@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar'
 import {
   Button,
   Image,
@@ -6,8 +5,12 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Animated,
 } from 'react-native'
 import Svg, { Path } from 'react-native-svg'
+import Rabbit from './Rabbit'
+import { useRef, useEffect } from 'react'
+
 const WelcomeView = ({ onPress }) => {
   return (
     <View style={{ flex: 1, backgroundColor: '#051940' }}>
@@ -38,6 +41,7 @@ const WelcomeView = ({ onPress }) => {
           style={{
             flex: 1,
             alignItems: 'center',
+            // transform: [{ scale: bttnFloat }],
           }}
         >
           <TouchableOpacity
@@ -74,15 +78,20 @@ const WelcomeView = ({ onPress }) => {
           ></View>
           <View
             style={{
-              height: 40,
-              width: 40,
-              backgroundColor: '#fbc10b',
-              borderRadius: 40,
+              height: 60,
+              width: 60,
+              borderRadius: 60,
               justifyContent: 'center',
               alignItems: 'center',
+              borderWidth: 3,
+              borderColor: '#fbc10b',
             }}
           >
-            <Text style={{ fontWeight: 'bold' }}>OR</Text>
+            <Text
+              style={{ fontWeight: 'bold', color: '#fbc10b', fontSize: 20 }}
+            >
+              OR
+            </Text>
           </View>
           <View
             style={{
@@ -122,6 +131,7 @@ const WelcomeView = ({ onPress }) => {
           style={{ width: 150, height: 150 }}
         />
       </View>
+      {/* <Rabbit /> */}
     </View>
   )
 }
